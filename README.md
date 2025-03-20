@@ -7,12 +7,16 @@ I was constantly running in to issues with my ISP in which they would block wire
 When called, the script simply generates a random port number, updates the `config.xml` file, and uses PHP Shell to restart the WireGuard service.
 
 # Setup
-
+- This script assumes the  following:
+  1. You already have a working WireGuard tunnel configured on your pfSense firewall.
+  2. The firewall rule you are using to allow ingress of WireGuard traffic on WAN port uses a [Port Alias](https://docs.netgate.com/pfsense/en/latest/firewall/aliases.html#port-aliases) rather than mapping the WireGuard tunnel's listen ports directly.
 - Download the script and open in your text editor of choice.
 - Configure the following variables:
   - `config_file` - The full path to the config.xml file.
   - `port_start` - The beginning of the random port range.
   - `port_end` - The end of the random port range.
+  - `port_alias` - The name of the port alias you are using to map the WireGuard listen port to the WAN interface ingress rules.
+  - `tunnel_id` - The interface name for your wireguard tunnel. (most likely something like `tun_wg0`)
 - Save the file and ensure it has the correct permissions with `sudo chmod +x ./wireguard_rotate.sh`
 - Move the file to a save place on your pfSense system. I recommend `/usr/local/bin/`
 - Configure your WAN interface such that the ports specified in the port range are open. This is **required** for WireGuard to function (I recommend creating a port alias for convenience).
