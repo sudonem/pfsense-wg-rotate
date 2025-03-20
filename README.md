@@ -20,7 +20,7 @@ When called, the script simply generates a random port number, updates the `conf
 
 # Important
 - This script has only been tested on pfSense CE v 2.7.2, however it should function similarly on the commercial builds.
-- Presently, the script assumes you are only using one wireguard tunnel. I have no current plans to extend the functionality beyond that, though it would be possible.
+- Presently, the script assumes you are only using one wireguard tunnel.
 - The script **does** create a full backup of the previous `config.xml` file and places it in the same directory as a precaution.
 - Regarding the port range - I strongly recommend keeping this as small as you feel is practical because these ports must be open on your WAN interface in order for WireGuard to function. I have no plans to extend functionality to automatically open/close ports following the listen port reassignment. Mostly because PHP Shell is a headache - but it is definitely possible for anyone adequately ambitious.
 
@@ -30,3 +30,7 @@ Configuration of WireGuard via the CLI is explicitly **not** supported or recomm
 Neither Netgate, nor the author of this project, nor any contributors shall be held liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from its use. This script is not officially supported by Netgate, and no support services are provided by the author. If you experience any issues or adverse effects as a result of using this script, you do so entirely at your own risk with no recourse against the author or associated parties.
 
 **TL;DR** Make backups, thoroughly test & be careful.
+
+# TODO:
+- Automatically rotate the WAN ingress port for WireGuard in sync with the rotation of the tunnel listen port.
+- Extend functionality to allow targeting of a specific WireGuard tunnel.
