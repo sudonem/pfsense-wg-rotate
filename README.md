@@ -36,5 +36,5 @@ Neither Netgate, nor the author of this project, nor any contributors shall be h
 **TL;DR** Make backups, thoroughly test & be careful.
 
 # TODO:
-- Automatically rotate the WAN ingress port for WireGuard in sync with the rotation of the tunnel listen port.
-- Extend functionality to allow targeting of a specific WireGuard tunnel.
+- Add support for port rotation with more than one WireGuard tunnels.
+  - This is a super low priority tbh. Don't hold your breath.
