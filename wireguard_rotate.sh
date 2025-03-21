@@ -30,13 +30,9 @@ range_end="51830"
 cp "$config_file" "$config_file.bak"
 
 # Identify current port and the line number in config.xml
-current_port="$(grep $tunnel_id -A5 $config_file | grep '<listenport>' |
-  sed 's/[[:space:]]//g' | sed -E 's#</?listenport>##g')"
-
-port_line="$(grep -n $tunnel_id -A5 $config_file | grep '<listenport>' |
-  sed 's/-//' | awk '{print $1}')"
-alias_line="$(grep -n '<alias>' -A5 $config_file | grep "$port_alias" -A3 |
-  grep '<address>' | sed 's/-//' | awk '{print $1}')"
+current_port="$(grep $tunnel_id -A5 $config_file | grep '<listenport>' | sed 's/[[:space:]]//g' | sed -E 's#</?listenport>##g')"
+port_line="$(grep -n $tunnel_id -A5 $config_file | grep '<listenport>' | sed 's/-//' | awk '{print $1}')"
+alias_line="$(grep -n '<alias>' -A5 $config_file | grep "$port_alias" -A3 | grep '<address>' | sed 's/-//' | awk '{print $1}')"
 
 # Generate random port number & confirm it is different than current port
 # Yes there are better ways to do this, but the pfSense cli offers
