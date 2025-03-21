@@ -16,7 +16,6 @@ When called, the script generates a random port number, updates the `config.xml`
 - Download the script using curl (wget is not avialable on pfSense):
 ```
 curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/main/wireguard_rotate.sh
-
 ```
   - Open the script for editing using [vi](https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/).
   - Note: `vi` is the only text editor installed on the pfSense device by default.
