@@ -14,8 +14,6 @@ When called, the script generates a random port number, updates the `config.xml`
 # Setup
 - Log in to your pfSense device via SSH
 - Download the script using curl (wget is not avialable on pfSense):
-  ```
-  ```
 ```
 curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/main/wireguard_rotate.sh
 
