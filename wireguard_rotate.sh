@@ -2,7 +2,7 @@
 #
 # Rotate the listen port on a WireGuard tunnel
 # https://github.com/sudonem/pfsense-wg-rotate
-# Date: 2025-03-20
+# Date: 2025-03-21
 # TODO: Support performing rotation on multiple tunnels (tbd)
 
 # Fail fast & loud
@@ -29,14 +29,16 @@ range_end="51830"
 # Backup config.xml file
 cp "$config_file" "$config_file.bak"
 
-# Identify current port and the matching config file line number
-current_port="$(grep $tunnel_id -A5 $config_file | grep '<listenport>' | sed 's/[[:space:]]//g' | sed -E 's#</?listenport>##g')"
+# Identify current port and the line number in config.xml
+current_port="$(grep $tunnel_id -A5 $config_file | grep '<listenport>' |
+  sed 's/[[:space:]]//g' | sed -E 's#</?listenport>##g')"
 
-port_line="$(grep -n $tunnel_id -A5 $config_file | grep '<listenport>' | sed 's/-//' | awk '{print $1}')"
+port_line="$(grep -n $tunnel_id -A5 $config_file | grep '<listenport>' |
+  sed 's/-//' | awk '{print $1}')"
+alias_line="$(grep -n '<alias>' -A5 $config_file | grep "$port_alias" -A3 |
+  grep '<address>' | sed 's/-//' | awk '{print $1}')"
 
-alias_line="$(grep -n '<alias>' -A5 $config_file | grep "$port_alias" -A3 | grep '<address>' | sed 's/-//' | awk '{print $1}')"
-
-# Generate random port number & confirm its different than current port
+# Generate random port number & confirm it is different than current port
 # Yes there are better ways to do this, but the pfSense cli offers
 # very limited options - so here we are.
 generate=1
@@ -48,13 +50,16 @@ while [ "$generate" -eq 1 ]; do
 done
 
 # Replace wireguard tunnel listen port with new port number
+# NOTE: The BSD version of sed requires specifying an empty
+# string when using the -i interactive flag.
 sed -i '' "${port_line}s/<listenport>.*<\/listenport>/<listenport>${new_port}<\/listenport>/" "$config_file"
 sed -i '' "${alias_line}s/<address>.*<\/address>/<address>${new_port}<\/address>/" "$config_file"
 logger -s -t wireguard "Listen port for $tunnel_id updated from $current_port to $new_port."
 
 # Apply changes made to config.xml
+# Required for updating the WAN ingress rules
 /usr/local/sbin/pfSsh.php playback upgradeconfig
 
-# Restart wireguard service via php shell
+# Restart wireguard service
 /usr/local/sbin/pfSsh.php playback svc restart WireGuard
 logger -s -t wireguard "Restarting wireguard tunnels."
