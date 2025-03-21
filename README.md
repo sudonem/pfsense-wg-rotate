@@ -10,6 +10,8 @@ When called, the script generates a random port number, updates the `config.xml`
 - This script assumes the  following:
   1. You already have a working WireGuard tunnel configured on your pfSense firewall.
   2. The firewall rule you are using to allow ingress of WireGuard traffic on WAN port uses a [Port Alias](https://docs.netgate.com/pfsense/en/latest/firewall/aliases.html#port-aliases) rather than mapping the WireGuard tunnel's listen ports directly.
+  3. You must enable [SSH](https://docs.netgate.com/pfsense/en/latest/recipes/ssh-access.html) access on your pfSense device for at least one user.
+  4. That user will need sudo permissions - which requires the  [Sudo Package](https://docs.netgate.com/pfsense/en/latest/packages/sudo.html).
 
 # Setup
 - Log in to your pfSense device via [SSH](https://docs.netgate.com/pfsense/en/latest/recipes/ssh-access.html)
