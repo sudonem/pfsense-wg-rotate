@@ -12,13 +12,13 @@ When called, the script generates a random port number, updates the `config.xml`
   2. The firewall rule you are using to allow ingress of WireGuard traffic on WAN port uses a [Port Alias](https://docs.netgate.com/pfsense/en/latest/firewall/aliases.html#port-aliases) rather than mapping the WireGuard tunnel's listen ports directly.
 
 # Setup
-- Log in to your pfSense device via SSH
+- Log in to your pfSense device via [SSH](https://docs.netgate.com/pfsense/en/latest/recipes/ssh-access.html)
 - Download the script using curl (wget is not avialable on pfSense):
 ```
 curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/main/wireguard_rotate.sh
 ```
   - Open the script for editing using [vi](https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/).
-  - Note: `vi` is the only text editor installed on the pfSense device by default.
+    - Note: `vi` is the only text editor installed on the pfSense device by default.
 - Configure/populate the following values:
   - `config_file` - The full path to the config.xml file.
     - This is `/conf/config.xml` by default and probably what you need.
@@ -30,9 +30,10 @@ curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/m
 ```
 sudo chmod +x ./wireguard_rotate.sh
 ```
-- Move the file to a save place on your pfSense system. I recommend `/usr/local/bin/`
+- Move the file to a safe place on your pfSense system. I recommend `/usr/local/bin/`
 - Configure your WAN interface such that the ports specified in the port range are open. This is **required** for WireGuard to function (I recommend creating a port alias for convenience).
-- Schedule the script to run at your preferred interval using `cron`. This can be done from the cli via ssh, however you may also install the cron package from within the pfSense package manager instead.
+- Schedule the script to run at your preferred interval using `cron`.
+  - This can be done from the cli via ssh, however you may also install the cron package from within the pfSense package manager instead.
 
 # Important
 - This script has only been tested on pfSense CE v 2.7.2, however it should function similarly on the commercial builds.
