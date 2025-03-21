@@ -36,10 +36,11 @@ sudo chmod +x ./wireguard_rotate.sh
 - Schedule the script to run at your preferred interval using `cron`.
   - This can be done from the cli via ssh, however you may also install the cron package from within the pfSense package manager instead.
 
-# Important
+# Notes
 - This script has only been tested on pfSense CE v 2.7.2, however it should function similarly on the commercial builds.
 - Presently, the script only allows for port rotation with a single WireGuard tunnel.
 - Each time it is run, the script **does** create a full backup of the current `config.xml` file and places it in the same directory as a precaution, but you should probably make your own backup for safe keeping.
+- When run, the script adds log entries which are visible from the pfSense UI via **Status > System Logs > System > General** under the **wireguard** process.
 
 # Disclaimer
 Configuration of WireGuard via the CLI is explicitly **not** supported or recommended by Netgate. This script directly modifies the `config.xml` file which can be dangerous. As such, these project files are provided "as-is" without any warranty of any kind, either express or implied. Use of this script is at your own risk.
