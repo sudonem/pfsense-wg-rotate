@@ -13,9 +13,14 @@ When called, the script generates a random port number, updates the `config.xml`
 
 # Setup
 - Log in to your pfSense device via SSH
-- Download the script using curl (wget is not avialable on pfSense)
-  - `curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/main/wireguard_rotate.sh`
-- Open the script for editing using [vi](https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/).
+- Download the script using curl (wget is not avialable on pfSense):
+  ```
+  ```
+```
+curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/main/wireguard_rotate.sh
+
+```
+  - Open the script for editing using [vi](https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/).
   - Note: `vi` is the only text editor installed on the pfSense device by default.
 - Configure/populate the following values:
   - `config_file` - The full path to the config.xml file.
@@ -24,7 +29,10 @@ When called, the script generates a random port number, updates the `config.xml`
   - `port_end` - The end of the random port range.
   - `port_alias` - The name of the port alias you are using to map the WireGuard listen port to the WAN interface ingress rules.
   - `tunnel_id` - The interface name for your wireguard tunnel. (most likely something like `tun_wg0`)
-- Save the file and ensure it has the correct permissions with `sudo chmod +x ./wireguard_rotate.sh`
+- Save the file and ensure it has the correct permissions with:
+```
+sudo chmod +x ./wireguard_rotate.sh
+```
 - Move the file to a save place on your pfSense system. I recommend `/usr/local/bin/`
 - Configure your WAN interface such that the ports specified in the port range are open. This is **required** for WireGuard to function (I recommend creating a port alias for convenience).
 - Schedule the script to run at your preferred interval using `cron`. This can be done from the cli via ssh, however you may also install the cron package from within the pfSense package manager instead.
