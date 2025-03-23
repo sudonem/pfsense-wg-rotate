@@ -13,11 +13,6 @@ set -eu
 # config_file=/conf/config.xml
 config_file="[CONFIG FILE PATH]"
 
-# Specify the name of the firewall port alias that will be
-# assigned to the WireGuard tunnel so that that the allowed
-# WAN ports may also be updated dynamically
-port_alias="[WIREGUARD PORT ALIAS]"
-
 # Specify the name of the WireGuard tunnel interface
 # that is to be rotated. This is most likely "tun_wg0"
 tunnel_id="[TUNNEL INTERFACE NAME]"
@@ -32,7 +27,6 @@ cp "$config_file" "$config_file.bak"
 # Identify current port and the line number in config.xml
 current_port="$(grep $tunnel_id -A5 $config_file | grep '<listenport>' | sed 's/[[:space:]]//g' | sed -E 's#</?listenport>##g')"
 port_line="$(grep -n $tunnel_id -A5 $config_file | grep '<listenport>' | sed 's/-//' | awk '{print $1}')"
-alias_line="$(grep -n '<alias>' -A5 $config_file | grep "$port_alias" -A3 | grep '<address>' | sed 's/-//' | awk '{print $1}')"
 
 # Generate random port number & confirm it is different than current port
 # Yes there are better ways to do this, but the pfSense cli offers
@@ -49,7 +43,6 @@ done
 # NOTE: The BSD version of sed requires specifying an empty
 # string when using the -i interactive flag.
 sed -i '' "${port_line}s/<listenport>.*<\/listenport>/<listenport>${new_port}<\/listenport>/" "$config_file"
-sed -i '' "${alias_line}s/<address>.*<\/address>/<address>${new_port}<\/address>/" "$config_file"
 logger -s -t wireguard "Listen port for $tunnel_id updated from $current_port to $new_port."
 
 # Apply changes made to config.xml

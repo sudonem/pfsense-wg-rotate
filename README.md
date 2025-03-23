@@ -7,15 +7,15 @@ I was constantly running in to issues with my ISP in which they would block wire
 When called, the script generates a random port number, updates the `config.xml` file, and uses PHP Shell to apply the changes and restart the WireGuard service.
 
 # Prerequisites
+<<<<<<< HEAD
   - You already have a working WireGuard tunnel configured on your pfSense firewall.
-  - The firewall rule you are using to allow ingress of WireGuard traffic on WAN port uses a [Port Alias](https://docs.netgate.com/pfsense/en/latest/firewall/aliases.html#port-aliases) rather than mapping the WireGuard tunnel's listen ports directly.
   - You must enable [SSH](https://docs.netgate.com/pfsense/en/latest/recipes/ssh-access.html) access on your pfSense device for at least one user.
   - That user will need sudo permissions - which requires the  [Sudo Package](https://docs.netgate.com/pfsense/en/latest/packages/sudo.html).
 
 # Setup
 - Log in to your pfSense device via [SSH](https://docs.netgate.com/pfsense/en/latest/recipes/ssh-access.html)
 - Download the script using curl (wget is not avialable on pfSense):
-```
+```sh
 curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/main/wireguard_rotate.sh
 ```
   - Open the script for editing using [vi](https://www.thegeekdiary.com/basic-vi-commands-cheat-sheet/).
@@ -25,10 +25,9 @@ curl -O https://raw.githubusercontent.com/sudonem/pfsense-wg-rotate/refs/heads/m
     - This is `/conf/config.xml` by default and probably what you need.
   - `port_start` - The beginning of the random port range.
   - `port_end` - The end of the random port range.
-  - `port_alias` - The name of the port alias you are using to map the WireGuard listen port to the WAN interface ingress rules.
   - `tunnel_id` - The interface name for your wireguard tunnel. (most likely something like `tun_wg0`)
 - Save the file and ensure it has the correct permissions with:
-```
+```sh
 sudo chmod +x ./wireguard_rotate.sh
 ```
 - Move the file to a safe place on your pfSense system. I recommend `/usr/local/bin/`
