@@ -1,8 +1,8 @@
 # pfsense-wg-rotate
-A simple shell script to rotate the [WireGuard](https://docs.netgate.com/pfsense/en/latest/vpn/wireguard/index.html) tunnel listen ports on a [pfSense](https://pfsense.org) firewall.
+A simple shell script to randomly rotate the [WireGuard](https://docs.netgate.com/pfsense/en/latest/vpn/wireguard/index.html) tunnel listen ports on a [pfSense](https://pfsense.org) firewall.
 
 # Summary
-I was constantly running in to issues with my ISP in which they would block wireguard traffic after an intermittant period, and the only workaround I was able to find was to update the listen port on the primary tunnel. There is no clean programmatic way to do this within the pfSense UI, so here we are.
+I was constantly running in to issues with my ISP in which they would block wireguard traffic after an intermittant period, and the only workaround I was able to find was to update the listen port on the primary tunnel. There is no clean programmatic way to do this within the pfSense web UI, so here we are.
 
 When called, the script generates a random port number, updates the `config.xml` file, and uses PHP Shell to apply the changes and restart the WireGuard service.
 
