@@ -7,7 +7,6 @@ I was constantly running in to issues with my ISP in which they would block wire
 When called, the script generates a random port number, updates the `config.xml` file, and uses PHP Shell to apply the changes and restart the WireGuard service.
 
 # Prerequisites
-<<<<<<< HEAD
   - You already have a working WireGuard tunnel configured on your pfSense firewall.
   - You must enable [SSH](https://docs.netgate.com/pfsense/en/latest/recipes/ssh-access.html) access on your pfSense device for at least one user.
   - That user will need sudo permissions - which requires the  [Sudo Package](https://docs.netgate.com/pfsense/en/latest/packages/sudo.html).
